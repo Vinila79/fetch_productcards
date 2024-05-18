@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product_Cards</title>
+    <style>
+        .card-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            padding: 20px;
+        }
+        .card {
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 16px;
+            width: 200px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+            background-color: #fff;
+        }
+        .card:hover {
+            transform: scale(1.05);
+        }
+        .card img {
+            max-width: 100%;
+            border-bottom: 1px solid #ccc;
+            margin-bottom: 8px;
+            border-radius: 8px 8px 0 0;
+        }
+        .card h3 {
+            font-size: 1.2em;
+            margin: 8px 0;
+        }
+        .card p {
+            font-size: 0.9em;
+            color: #555;
+        }
+        .loading {
+            font-size: 1.2em;
+            color: #777;
+            text-align: center;
+            margin-top: 50px;
+        }
+    </style>
+</head>
+<body>
+    <div class="card-container" id="card-container"></div>
+    <script>
+        fetch("https://dummyjson.com/products")
+            .then((e) => (e).json())
+            .then( (data)=> {
+                const container = document.getElementById('card-container');
+                for (let i = 0; i < data.products.length; i++) {
+                    const product = data.products[i];
+                    let getdiv=document.getElementById('card-container');
+                    getdiv.style.backgroundColor="pink";
+
+                    // Create card element
+                    const card = document.createElement('div');
+                    card.classList.add('card');
+
+                    // Create image element
+                    const img = document.createElement('img');
+                    img.src = product.thumbnail;
+                    img.alt = product.title;
+
+                    // Create title element
+                    const title = document.createElement('h3');
+                    title.textContent = product.title;
+
+                    // Create description element
+                    const description = document.createElement('p');
+                    description.textContent = product.description;
+
+                    // Append elements to card
+                    card.appendChild(img);
+                    card.appendChild(title);
+                    card.appendChild(description);
+
+                    // Append card to container
+                    container.appendChild(card);
+                }
+            })
+    </script>
+</body>
+</html>
